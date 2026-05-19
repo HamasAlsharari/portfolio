@@ -1,365 +1,283 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hamas Alsharari — Software Engineer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --bg: #0a0a0f;
-      --surface: #111118;
-      --card: #16161f;
-      --accent: #7c3aed;
-      --accent2: #a78bfa;
-      --accent3: #38bdf8;
-      --text: #f0eeff;
-      --muted: #8b85a8;
-      --border: rgba(124,58,237,0.18);
+      --bg: #f5f0fa;
+      --card: #ffffff;
+      --accent: #5b1fa6;
+      --accent2: #9b6dca;
+      --accent3: #d4b8f0;
+      --text: #2a1a3e;
+      --muted: #7a6b8a;
+      --border: #e2d5f0;
     }
 
-    * { margin:0; padding:0; box-sizing:border-box; }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
 
     body {
       font-family: 'DM Sans', sans-serif;
       background: var(--bg);
       color: var(--text);
-      overflow-x: hidden;
     }
-
-    /* ── NOISE OVERLAY ── */
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none; z-index: 0; opacity: .5;
-    }
-
-    /* ── GLOW BLOBS ── */
-    .blob {
-      position: fixed; border-radius: 50%;
-      filter: blur(120px); pointer-events: none; z-index: 0;
-    }
-    .blob-1 { width:500px; height:500px; background: rgba(124,58,237,.12); top:-150px; left:-150px; }
-    .blob-2 { width:400px; height:400px; background: rgba(56,189,248,.08); bottom:-100px; right:-100px; }
 
     /* ── NAV ── */
     nav {
-      position: fixed; top: 0; left: 0; right: 0;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; justify-content: space-between; align-items: center;
-      padding: 1.2rem 4rem;
-      background: rgba(10,10,15,.8);
-      backdrop-filter: blur(16px);
+      padding: 1.2rem 2.5rem;
+      background: rgba(245,240,250,0.9);
+      backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
-      z-index: 100;
     }
     .nav-logo {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800; font-size: 1.1rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; font-weight: 700;
       color: var(--text);
-      letter-spacing: -.5px;
     }
     .nav-logo span { color: var(--accent2); }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a {
-      font-size: .85rem; font-weight: 500;
+      font-size: .82rem; font-weight: 500;
       color: var(--muted); text-decoration: none;
       letter-spacing: .5px; text-transform: uppercase;
       transition: color .2s;
     }
-    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover { color: var(--accent); }
 
     /* ── HERO ── */
     .hero {
-      position: relative; z-index: 1;
       min-height: 100vh;
       display: flex; flex-direction: column;
-      justify-content: center; align-items: flex-start;
-      padding: 8rem 4rem 4rem;
-      max-width: 1100px; margin: 0 auto;
+      justify-content: center; align-items: center;
+      text-align: center;
+      padding: 8rem 2rem 4rem;
     }
     .hero-tag {
-      font-size: .75rem; font-weight: 500;
+      font-size: .72rem; font-weight: 500;
       letter-spacing: 3px; text-transform: uppercase;
-      color: var(--accent2);
-      border: 1px solid var(--border);
-      padding: .35rem .9rem; border-radius: 100px;
-      margin-bottom: 2rem;
+      color: var(--accent2); margin-bottom: 2rem;
       animation: fadeUp .6s ease both;
     }
-    .hero h1 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(3rem, 7vw, 5.5rem);
-      font-weight: 800; line-height: 1.05;
-      letter-spacing: -2px;
+    .avatar-wrap {
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      border: 3px solid var(--accent2);
+      background: white;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 2rem;
+      box-shadow: 0 8px 32px rgba(91,31,166,.15);
       animation: fadeUp .6s .1s ease both;
+      overflow: hidden;
     }
-    .hero h1 .line2 { color: var(--accent2); }
-    .hero-sub {
-      margin-top: 1.5rem;
-      font-size: 1.1rem; font-weight: 300;
-      color: var(--muted); max-width: 520px;
-      line-height: 1.8;
+    .avatar-wrap svg {
+      width: 110px; height: 110px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-weight: 900; line-height: 1.05;
+      color: var(--text);
       animation: fadeUp .6s .2s ease both;
     }
-    .hero-cta {
-      margin-top: 2.5rem;
-      display: flex; gap: 1rem; flex-wrap: wrap;
+    .hero h1 span { color: var(--accent); }
+    .hero-sub {
+      margin-top: 1.2rem;
+      font-size: 1rem; font-weight: 300;
+      color: var(--muted); max-width: 480px;
+      line-height: 1.8;
       animation: fadeUp .6s .3s ease both;
+    }
+    .hero-cta {
+      margin-top: 2rem;
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp .6s .4s ease both;
     }
     .btn {
       display: inline-block;
       padding: .75rem 1.8rem;
-      border-radius: 8px;
-      font-size: .9rem; font-weight: 500;
+      border-radius: 50px;
+      font-size: .88rem; font-weight: 500;
       text-decoration: none;
-      transition: transform .2s, box-shadow .2s;
+      transition: all .25s;
       cursor: pointer;
     }
-    .btn:hover { transform: translateY(-2px); }
     .btn-primary {
       background: var(--accent);
       color: #fff;
-      box-shadow: 0 0 30px rgba(124,58,237,.35);
+      box-shadow: 0 4px 20px rgba(91,31,166,.3);
     }
-    .btn-primary:hover { box-shadow: 0 0 40px rgba(124,58,237,.55); }
+    .btn-primary:hover { background: #4a1688; transform: translateY(-2px); }
     .btn-outline {
       background: transparent;
-      color: var(--text);
-      border: 1px solid var(--border);
+      color: var(--accent);
+      border: 1.5px solid var(--accent2);
     }
-    .btn-outline:hover { border-color: var(--accent2); color: var(--accent2); }
-
-    .hero-stats {
-      margin-top: 4rem;
-      display: flex; gap: 3rem;
-      animation: fadeUp .6s .4s ease both;
-    }
-    .stat-num {
-      font-family: 'Syne', sans-serif;
-      font-size: 2rem; font-weight: 800;
-      color: var(--accent2);
-    }
-    .stat-label { font-size: .8rem; color: var(--muted); margin-top: .2rem; }
+    .btn-outline:hover { background: var(--accent3); transform: translateY(-2px); }
 
     /* ── SECTIONS ── */
     .section {
-      position: relative; z-index: 1;
-      max-width: 1100px; margin: 0 auto;
-      padding: 5rem 4rem;
-    }
-    .section-tag {
-      font-size: .7rem; font-weight: 600;
-      letter-spacing: 3px; text-transform: uppercase;
-      color: var(--accent2); margin-bottom: .75rem;
+      max-width: 860px; margin: 0 auto;
+      padding: 5rem 2rem;
     }
     .section-title {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-      font-weight: 800; letter-spacing: -1px;
-      margin-bottom: 3rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem; font-weight: 700;
+      color: var(--text); margin-bottom: .5rem;
     }
-    .divider {
-      height: 1px;
-      background: linear-gradient(90deg, var(--accent), transparent);
-      margin-bottom: 4rem;
+    .section-line {
+      width: 60px; height: 3px;
+      background: var(--accent2);
+      border-radius: 2px; margin-bottom: 2.5rem;
     }
 
     /* ── ABOUT ── */
-    .about-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
-      align-items: center;
+    .about-text {
+      font-size: 1rem; color: var(--muted);
+      line-height: 1.9; font-weight: 300;
+      margin-bottom: 2rem;
     }
-    .about-text p {
-      color: var(--muted); line-height: 1.9;
-      font-weight: 300; font-size: 1rem;
-      margin-bottom: 1rem;
+    .edu-list { display: flex; flex-direction: column; gap: .75rem; }
+    .edu-item {
+      border-left: 3px solid var(--accent2);
+      padding-left: 1rem;
     }
-    .about-cards { display: flex; flex-direction: column; gap: 1rem; }
-    .about-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px; padding: 1.2rem 1.5rem;
-      display: flex; align-items: center; gap: 1rem;
-    }
-    .about-card-icon {
-      width: 40px; height: 40px;
-      background: rgba(124,58,237,.15);
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem; flex-shrink: 0;
-    }
-    .about-card-title { font-weight: 600; font-size: .9rem; }
-    .about-card-sub { font-size: .8rem; color: var(--muted); margin-top: .15rem; }
+    .edu-title { font-weight: 600; font-size: .95rem; color: var(--text); }
+    .edu-sub { font-size: .85rem; color: var(--accent2); margin-top: .15rem; }
 
-    /* ── SKILLS ── */
-    .skills-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
-    }
-    .skill-group {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px; padding: 1.5rem;
-    }
-    .skill-group-title {
-      font-family: 'Syne', sans-serif;
-      font-size: .85rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 1px;
-      color: var(--accent2); margin-bottom: 1rem;
-    }
-    .skill-tags { display: flex; flex-wrap: wrap; gap: .5rem; }
-    .skill-tag {
-      background: rgba(124,58,237,.12);
-      border: 1px solid rgba(124,58,237,.2);
+    /* ── TECH STACK ── */
+    .stack-grid { display: flex; flex-wrap: wrap; gap: .6rem; }
+    .stack-tag {
+      background: white;
+      border: 1.5px solid var(--border);
       color: var(--text);
-      font-size: .8rem; padding: .3rem .8rem;
-      border-radius: 100px;
+      font-size: .85rem; padding: .4rem 1rem;
+      border-radius: 50px;
+      transition: all .2s;
     }
+    .stack-tag:hover { border-color: var(--accent2); color: var(--accent); }
 
     /* ── PROJECTS ── */
-    .projects-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1.5rem;
-    }
+    .projects-list { display: flex; flex-direction: column; gap: 1.5rem; }
     .project-card {
       background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px; padding: 2rem;
-      transition: border-color .25s, transform .25s;
-      position: relative; overflow: hidden;
+      border: 1.5px solid var(--border);
+      border-radius: 16px; padding: 1.8rem;
+      transition: all .25s;
     }
-    .project-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, var(--accent), var(--accent3));
-      opacity: 0; transition: opacity .25s;
-    }
-    .project-card:hover { border-color: rgba(124,58,237,.4); transform: translateY(-4px); }
-    .project-card:hover::before { opacity: 1; }
-    .project-badge {
-      display: inline-block;
-      font-size: .7rem; font-weight: 600;
-      letter-spacing: 2px; text-transform: uppercase;
-      color: var(--accent2);
-      background: rgba(124,58,237,.1);
-      border: 1px solid rgba(124,58,237,.2);
-      padding: .25rem .7rem; border-radius: 100px;
-      margin-bottom: 1rem;
-    }
+    .project-card:hover { border-color: var(--accent2); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(91,31,166,.1); }
     .project-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.2rem; font-weight: 700;
-      margin-bottom: .75rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; font-weight: 700;
+      color: var(--text); margin-bottom: .6rem;
     }
     .project-desc {
-      font-size: .875rem; color: var(--muted);
-      line-height: 1.7; margin-bottom: 1.5rem;
+      font-size: .9rem; color: var(--muted);
+      line-height: 1.7; margin-bottom: 1rem;
     }
-    .project-stack { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1.5rem; }
-    .stack-tag {
-      font-size: .75rem;
-      background: rgba(56,189,248,.08);
-      border: 1px solid rgba(56,189,248,.15);
-      color: var(--accent3);
-      padding: .2rem .6rem; border-radius: 4px;
-    }
-    .project-links { display: flex; gap: .75rem; }
-    .project-link {
-      font-size: .8rem; font-weight: 500;
-      color: var(--muted); text-decoration: none;
-      display: flex; align-items: center; gap: .35rem;
-      transition: color .2s;
-    }
-    .project-link:hover { color: var(--accent2); }
-
-    /* ── EXPERIENCE ── */
-    .timeline { display: flex; flex-direction: column; gap: 1.5rem; }
-    .timeline-item {
-      display: grid; grid-template-columns: 160px 1fr;
-      gap: 2rem; align-items: start;
-    }
-    .timeline-date {
-      font-size: .8rem; color: var(--muted);
-      padding-top: .3rem; text-align: right;
-      font-weight: 300;
-    }
-    .timeline-content {
-      background: var(--card);
+    .project-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1.2rem; }
+    .project-tag {
+      background: var(--bg);
       border: 1px solid var(--border);
-      border-radius: 12px; padding: 1.5rem;
+      color: var(--muted);
+      font-size: .78rem; padding: .25rem .7rem;
+      border-radius: 50px;
     }
-    .timeline-role {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700; font-size: 1rem;
+    .project-btns { display: flex; gap: .75rem; }
+    .project-btn {
+      font-size: .82rem; font-weight: 500;
+      color: white; background: var(--accent);
+      text-decoration: none;
+      padding: .45rem 1.1rem; border-radius: 50px;
+      transition: background .2s;
     }
-    .timeline-company {
-      font-size: .85rem; color: var(--accent2);
-      margin: .25rem 0 .75rem;
+    .project-btn:hover { background: #4a1688; }
+    .project-btn.outline {
+      background: transparent; color: var(--accent);
+      border: 1.5px solid var(--accent2);
     }
-    .timeline-desc {
-      font-size: .875rem; color: var(--muted);
-      line-height: 1.7;
-    }
-    .timeline-desc li { margin-bottom: .4rem; margin-left: 1rem; }
+    .project-btn.outline:hover { background: var(--accent3); }
 
     /* ── CERTIFICATIONS ── */
     .certs-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr));
       gap: 1rem;
     }
     .cert-card {
       background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px; padding: 1.2rem 1.5rem;
-      display: flex; align-items: center; gap: 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 12px; padding: 1.1rem 1.3rem;
+      display: flex; align-items: center; gap: .9rem;
       transition: border-color .2s;
     }
-    .cert-card:hover { border-color: rgba(124,58,237,.4); }
+    .cert-card:hover { border-color: var(--accent2); }
     .cert-icon {
-      width: 38px; height: 38px; flex-shrink: 0;
-      background: rgba(124,58,237,.12);
-      border-radius: 8px;
+      width: 36px; height: 36px; flex-shrink: 0;
+      background: var(--bg);
+      border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
-    .cert-name { font-size: .875rem; font-weight: 500; line-height: 1.3; }
-    .cert-issuer { font-size: .75rem; color: var(--muted); margin-top: .2rem; }
+    .cert-name { font-size: .85rem; font-weight: 500; color: var(--text); line-height: 1.3; }
+    .cert-issuer { font-size: .75rem; color: var(--accent2); margin-top: .15rem; }
+
+    /* ── EXPERIENCE ── */
+    .exp-list { display: flex; flex-direction: column; gap: 1.5rem; }
+    .exp-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 16px; padding: 1.8rem;
+    }
+    .exp-role { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--text); }
+    .exp-company { font-size: .85rem; color: var(--accent2); margin: .3rem 0 .8rem; }
+    .exp-bullets { list-style: none; }
+    .exp-bullets li {
+      font-size: .9rem; color: var(--muted);
+      line-height: 1.7; padding-left: 1rem; position: relative;
+      margin-bottom: .3rem;
+    }
+    .exp-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--accent2); }
 
     /* ── CONTACT ── */
+    .contact-text {
+      font-size: 1rem; color: var(--muted);
+      line-height: 1.8; font-weight: 300;
+      margin-bottom: 2rem; text-align: center;
+    }
     .contact-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+      gap: 1rem;
     }
     .contact-card {
       background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px; padding: 2rem;
+      border: 1.5px solid var(--border);
+      border-radius: 14px; padding: 1.3rem;
       text-decoration: none; color: var(--text);
-      display: flex; align-items: center; gap: 1.5rem;
-      transition: border-color .25s, transform .25s;
+      display: flex; align-items: center; gap: .9rem;
+      transition: all .25s;
     }
-    .contact-card:hover { border-color: rgba(124,58,237,.4); transform: translateY(-3px); }
+    .contact-card:hover { border-color: var(--accent2); transform: translateY(-2px); }
     .contact-icon {
-      width: 50px; height: 50px; flex-shrink: 0;
-      background: rgba(124,58,237,.12);
-      border-radius: 12px;
+      width: 40px; height: 40px; flex-shrink: 0;
+      background: var(--bg); border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem;
+      font-size: 1.1rem;
     }
-    .contact-label { font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
-    .contact-value { font-weight: 500; font-size: .95rem; margin-top: .2rem; }
+    .contact-label { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+    .contact-value { font-size: .88rem; font-weight: 500; margin-top: .15rem; }
 
     /* ── FOOTER ── */
     footer {
-      position: relative; z-index: 1;
+      text-align: center; padding: 2rem;
       border-top: 1px solid var(--border);
-      padding: 2rem 4rem;
-      display: flex; justify-content: space-between; align-items: center;
-      max-width: 1100px; margin: 0 auto;
+      font-size: .8rem; color: var(--muted);
     }
-    footer p { font-size: .8rem; color: var(--muted); }
 
     /* ── ANIMATIONS ── */
     @keyframes fadeUp {
@@ -368,29 +286,20 @@
     }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; }
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.2rem; }
       .nav-links { display: none; }
-      .hero, .section { padding-left: 1.5rem; padding-right: 1.5rem; }
-      .about-grid { grid-template-columns: 1fr; }
-      .timeline-item { grid-template-columns: 1fr; gap: .5rem; }
-      .timeline-date { text-align: left; }
-      .contact-grid { grid-template-columns: 1fr; }
-      footer { flex-direction: column; gap: 1rem; text-align: center; }
+      .section { padding: 3.5rem 1.2rem; }
     }
   </style>
 </head>
 <body>
-
-  <div class="blob blob-1"></div>
-  <div class="blob blob-2"></div>
 
   <!-- NAV -->
   <nav>
     <div class="nav-logo">Hamas <span>Alsharari</span></div>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
-      <li><a href="#skills">Skills</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#certifications">Certs</a></li>
@@ -399,188 +308,148 @@
   </nav>
 
   <!-- HERO -->
-  <div class="hero">
-    <div class="hero-tag">Available for opportunities</div>
-    <h1>
-      Software<br/>
-      <span class="line2">Engineer</span>
-    </h1>
+  <section class="hero">
+    <div class="hero-tag">Software Engineer · Full-Stack Developer</div>
+
+    <!-- Avatar: woman coding SVG illustration -->
+    <div class="avatar-wrap">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- desk -->
+        <rect x="10" y="68" width="80" height="5" rx="2.5" fill="#e2d5f0"/>
+        <!-- laptop base -->
+        <rect x="28" y="60" width="44" height="8" rx="2" fill="#9b6dca"/>
+        <!-- laptop screen -->
+        <rect x="30" y="38" width="40" height="24" rx="2" fill="#5b1fa6"/>
+        <!-- screen content lines -->
+        <rect x="34" y="42" width="20" height="2" rx="1" fill="#d4b8f0"/>
+        <rect x="34" y="47" width="14" height="2" rx="1" fill="#d4b8f0"/>
+        <rect x="34" y="52" width="17" height="2" rx="1" fill="#d4b8f0"/>
+        <!-- code bracket -->
+        <text x="56" y="54" font-size="9" fill="#d4b8f0" font-family="monospace">&lt;/&gt;</text>
+        <!-- body -->
+        <ellipse cx="50" cy="30" rx="10" ry="12" fill="#f3d9b1"/>
+        <!-- hair -->
+        <ellipse cx="50" cy="22" rx="10" ry="8" fill="#3d1f00"/>
+        <rect x="40" y="22" width="4" height="10" rx="2" fill="#3d1f00"/>
+        <rect x="56" y="22" width="4" height="10" rx="2" fill="#3d1f00"/>
+        <!-- shirt -->
+        <path d="M38 40 Q50 35 62 40 L64 60 H36 Z" fill="#9b6dca"/>
+        <!-- arms -->
+        <path d="M38 42 Q30 50 32 60" stroke="#f3d9b1" stroke-width="5" stroke-linecap="round"/>
+        <path d="M62 42 Q70 50 68 60" stroke="#f3d9b1" stroke-width="5" stroke-linecap="round"/>
+        <!-- hands on keyboard -->
+        <ellipse cx="33" cy="61" rx="4" ry="3" fill="#f3d9b1"/>
+        <ellipse cx="67" cy="61" rx="4" ry="3" fill="#f3d9b1"/>
+      </svg>
+    </div>
+
+    <h1>Hamas.<br/><span>Alsharari</span></h1>
     <p class="hero-sub">
-      Full-Stack developer specializing in React, Django & PostgreSQL.
-      Building scalable, real-world web applications with clean architecture.
+      Building clean & scalable web applications using React and Django,
+      with a passion for solving real-world problems through code.
     </p>
     <div class="hero-cta">
       <a href="#projects" class="btn btn-primary">View Projects</a>
       <a href="#contact" class="btn btn-outline">Get in Touch</a>
       <a href="https://github.com/HamasAlsharari" target="_blank" class="btn btn-outline">GitHub ↗</a>
     </div>
-    <div class="hero-stats">
-      <div>
-        <div class="stat-num">8+</div>
-        <div class="stat-label">Certifications</div>
-      </div>
-      <div>
-        <div class="stat-num">2</div>
-        <div class="stat-label">Key Projects</div>
-      </div>
-      <div>
-        <div class="stat-num">500+</div>
-        <div class="stat-label">Bootcamp Hours</div>
-      </div>
-    </div>
-  </div>
+  </section>
 
   <!-- ABOUT -->
   <section class="section" id="about">
-    <div class="section-tag">Who I am</div>
     <div class="section-title">About Me</div>
-    <div class="divider"></div>
-    <div class="about-grid">
-      <div class="about-text">
-        <p>I'm a passionate Software Engineer with a Bachelor's degree in Software Engineering from Jouf University (GPA: 4.41/5.00), and a graduate of the Saudi Digital Academy & General Assembly Full-Stack Bootcamp.</p>
-        <p>I specialize in Full-Stack Web Development using React, Django REST Framework, and PostgreSQL. I enjoy building scalable, real-world solutions and thrive in collaborative, agile environments.</p>
-        <p>My experience includes a front-end internship at Aramco and 500+ hours of intensive full-stack training, where I delivered production-ready applications with authentication, CRUD functionality, and containerized deployment.</p>
-      </div>
-      <div class="about-cards">
-        <div class="about-card">
-          <div class="about-card-icon">🎓</div>
-          <div>
-            <div class="about-card-title">BSc Software Engineering</div>
-            <div class="about-card-sub">Jouf University — GPA 4.41/5.00 · 2025</div>
-          </div>
+    <div class="section-line"></div>
+    <p class="about-text">
+      I'm a Software Engineering graduate from Jouf University (GPA: 4.41/5.00) and a graduate of
+      the Saudi Digital Academy & General Assembly Full-Stack Bootcamp. I specialize in Full-Stack
+      Web Development using React, Django REST Framework, and PostgreSQL. I enjoy building
+      scalable, real-world solutions and thrive in collaborative, agile environments.
+    </p>
+    <p class="about-text">
+      I completed a front-end internship at Aramco and 500+ hours of intensive full-stack training,
+      delivering production-ready applications with authentication, CRUD functionality, and
+      containerized deployment.
+    </p>
+
+    <div style="margin-bottom:2rem;">
+      <div class="section-title" style="font-size:1.4rem; margin-bottom:.5rem;">Education</div>
+      <div class="section-line"></div>
+      <div class="edu-list">
+        <div class="edu-item">
+          <div class="edu-title">Bachelor's Degree in Software Engineering — GPA 4.41/5.00</div>
+          <div class="edu-sub">Jouf University · Graduated May 2025</div>
         </div>
-        <div class="about-card">
-          <div class="about-card-icon">🏢</div>
-          <div>
-            <div class="about-card-title">Saudi Council of Engineers</div>
-            <div class="about-card-sub">Software Engineering Specialist · #1149032</div>
-          </div>
-        </div>
-        <div class="about-card">
-          <div class="about-card-icon">📍</div>
-          <div>
-            <div class="about-card-title">Based in Khobar, Saudi Arabia</div>
-            <div class="about-card-sub">Open to: Khobar · Dhahran · Dammam · Jubail</div>
-          </div>
-        </div>
-        <div class="about-card">
-          <div class="about-card-icon">✅</div>
-          <div>
-            <div class="about-card-title">Available Immediately</div>
-            <div class="about-card-sub">On-site · Full-time</div>
-          </div>
+        <div class="edu-item">
+          <div class="edu-title">Full-Stack Web Development Bootcamp — 500+ Hours</div>
+          <div class="edu-sub">General Assembly – Saudi Digital Academy · Aug–Nov 2025</div>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- SKILLS -->
-  <section class="section" id="skills">
-    <div class="section-tag">What I work with</div>
-    <div class="section-title">Skills & Technologies</div>
-    <div class="divider"></div>
-    <div class="skills-grid">
-      <div class="skill-group">
-        <div class="skill-group-title">Languages</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Python</span>
-          <span class="skill-tag">JavaScript</span>
-          <span class="skill-tag">HTML5</span>
-          <span class="skill-tag">CSS3</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">Frameworks & Libraries</div>
-        <div class="skill-tags">
-          <span class="skill-tag">React</span>
-          <span class="skill-tag">Django</span>
-          <span class="skill-tag">Django REST Framework</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">Databases</div>
-        <div class="skill-tags">
-          <span class="skill-tag">PostgreSQL</span>
-          <span class="skill-tag">MySQL</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">Tools & DevOps</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Docker</span>
-          <span class="skill-tag">Git</span>
-          <span class="skill-tag">GitHub</span>
-          <span class="skill-tag">VS Code</span>
-          <span class="skill-tag">JWT Auth</span>
-          <span class="skill-tag">REST APIs</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">Methodologies</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Agile</span>
-          <span class="skill-tag">Scrum</span>
-          <span class="skill-tag">OOP</span>
-          <span class="skill-tag">MVC</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-title">Soft Skills</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Problem Solving</span>
-          <span class="skill-tag">Team Collaboration</span>
-          <span class="skill-tag">Communication</span>
-        </div>
-      </div>
+    <div class="section-title" style="font-size:1.4rem; margin-bottom:.5rem;">Tech Stack</div>
+    <div class="section-line"></div>
+    <div class="stack-grid">
+      <span class="stack-tag">Python</span>
+      <span class="stack-tag">JavaScript</span>
+      <span class="stack-tag">React</span>
+      <span class="stack-tag">Django</span>
+      <span class="stack-tag">Django REST Framework</span>
+      <span class="stack-tag">PostgreSQL</span>
+      <span class="stack-tag">MySQL</span>
+      <span class="stack-tag">Docker</span>
+      <span class="stack-tag">Git & GitHub</span>
+      <span class="stack-tag">JWT Auth</span>
+      <span class="stack-tag">REST APIs</span>
+      <span class="stack-tag">HTML5 & CSS3</span>
+      <span class="stack-tag">Agile & Scrum</span>
     </div>
   </section>
 
   <!-- PROJECTS -->
   <section class="section" id="projects">
-    <div class="section-tag">What I've built</div>
     <div class="section-title">Projects</div>
-    <div class="divider"></div>
-    <div class="projects-grid">
+    <div class="section-line"></div>
+    <div class="projects-list">
 
       <div class="project-card">
-        <div class="project-badge">Featured</div>
         <div class="project-title">Blockchain Recruitment System</div>
         <div class="project-desc">
-          A blockchain-based recruitment platform ensuring transparent, tamper-proof candidate data storage. Integrated ML algorithms to analyze applicant profiles and improve hiring decision accuracy.
+          A blockchain-based recruitment platform ensuring transparent, tamper-proof candidate
+          data storage. Integrated ML algorithms to analyze applicant profiles and improve hiring
+          decision accuracy. Built as a full-stack application with React and Django.
         </div>
-        <div class="project-stack">
-          <span class="stack-tag">React</span>
-          <span class="stack-tag">Django</span>
-          <span class="stack-tag">Python</span>
-          <span class="stack-tag">MySQL</span>
-          <span class="stack-tag">Blockchain</span>
-          <span class="stack-tag">Machine Learning</span>
+        <div class="project-tags">
+          <span class="project-tag">React</span>
+          <span class="project-tag">Django</span>
+          <span class="project-tag">Python</span>
+          <span class="project-tag">MySQL</span>
+          <span class="project-tag">Blockchain</span>
+          <span class="project-tag">Machine Learning</span>
         </div>
-        <div style="font-size:.8rem; color:var(--muted);">
-          <strong style="color:var(--accent2);">Role:</strong> Full-Stack (Frontend + Backend + Database + APIs)
+        <div style="font-size:.82rem; color:var(--accent2); margin-bottom:1rem;">
+          Role: Full-Stack Developer · Frontend + Backend + Database + APIs
         </div>
       </div>
 
       <div class="project-card">
-        <div class="project-badge">Full-Stack</div>
         <div class="project-title">ExpenseTracker</div>
         <div class="project-desc">
-          A personal finance app with JWT authentication for secure expense and payment tracking. Deployed as a containerized application using Docker for improved scalability.
+          A personal finance app with JWT authentication for secure expense and payment tracking.
+          Implemented RESTful API with PostgreSQL for full CRUD functionality. Deployed as a
+          containerized application using Docker.
         </div>
-        <div class="project-stack">
-          <span class="stack-tag">React</span>
-          <span class="stack-tag">Django REST Framework</span>
-          <span class="stack-tag">PostgreSQL</span>
-          <span class="stack-tag">Docker</span>
-          <span class="stack-tag">JWT</span>
+        <div class="project-tags">
+          <span class="project-tag">React</span>
+          <span class="project-tag">Django REST Framework</span>
+          <span class="project-tag">PostgreSQL</span>
+          <span class="project-tag">Docker</span>
+          <span class="project-tag">JWT</span>
         </div>
-        <div style="font-size:.8rem; color:var(--muted); margin-bottom:1rem;">
-          <strong style="color:var(--accent2);">Role:</strong> Full-Stack (Frontend + Backend + Database + APIs)
+        <div style="font-size:.82rem; color:var(--accent2); margin-bottom:1rem;">
+          Role: Full-Stack Developer · Frontend + Backend + Database + APIs
         </div>
-        <div class="project-links">
-          <a href="https://github.com/HamasAlsharari" target="_blank" class="project-link">
-            ↗ GitHub
-          </a>
+        <div class="project-btns">
+          <a href="https://github.com/HamasAlsharari" target="_blank" class="project-btn">View Code</a>
         </div>
       </div>
 
@@ -589,35 +458,28 @@
 
   <!-- EXPERIENCE -->
   <section class="section" id="experience">
-    <div class="section-tag">Where I've worked</div>
     <div class="section-title">Experience</div>
-    <div class="divider"></div>
-    <div class="timeline">
+    <div class="section-line"></div>
+    <div class="exp-list">
 
-      <div class="timeline-item">
-        <div class="timeline-date">Aug – Nov 2025</div>
-        <div class="timeline-content">
-          <div class="timeline-role">Bootcamp Trainee</div>
-          <div class="timeline-company">Saudi Digital Academy (SDA) × General Assembly · Riyadh</div>
-          <ul class="timeline-desc">
-            <li>Completed 500+ hour full-stack bootcamp focused on React, Django REST Framework & PostgreSQL.</li>
-            <li>Built and deployed full-stack web applications with CRUD functionality and JWT authentication.</li>
-            <li>Worked in agile teams to deliver real-world projects end-to-end.</li>
-          </ul>
-        </div>
+      <div class="exp-card">
+        <div class="exp-role">Front-End Developer Intern</div>
+        <div class="exp-company">Aramco · Dammam, Saudi Arabia · Jun–Aug 2024</div>
+        <ul class="exp-bullets">
+          <li>Developed responsive interfaces for internal web applications using HTML, CSS & JavaScript.</li>
+          <li>Collaborated with cross-functional teams in agile sprints to deliver milestones on time.</li>
+          <li>Gained hands-on experience with professional code review workflows.</li>
+        </ul>
       </div>
 
-      <div class="timeline-item">
-        <div class="timeline-date">Jun – Aug 2024</div>
-        <div class="timeline-content">
-          <div class="timeline-role">Front-End Developer Intern</div>
-          <div class="timeline-company">Aramco · Dammam, Saudi Arabia</div>
-          <ul class="timeline-desc">
-            <li>Developed responsive interfaces for internal web applications using HTML, CSS & JavaScript.</li>
-            <li>Collaborated with cross-functional teams in agile sprints to deliver milestones on time.</li>
-            <li>Gained hands-on experience with professional code review practices and workflows.</li>
-          </ul>
-        </div>
+      <div class="exp-card">
+        <div class="exp-role">Bootcamp Trainee</div>
+        <div class="exp-company">Saudi Digital Academy × General Assembly · Riyadh · Aug–Nov 2025</div>
+        <ul class="exp-bullets">
+          <li>Completed 500+ hour full-stack bootcamp: React, Django REST Framework & PostgreSQL.</li>
+          <li>Built and deployed full-stack apps with CRUD functionality and JWT authentication.</li>
+          <li>Worked in agile teams to deliver real-world projects end-to-end.</li>
+        </ul>
       </div>
 
     </div>
@@ -625,109 +487,47 @@
 
   <!-- CERTIFICATIONS -->
   <section class="section" id="certifications">
-    <div class="section-tag">Credentials</div>
     <div class="section-title">Certifications</div>
-    <div class="divider"></div>
+    <div class="section-line"></div>
     <div class="certs-grid">
-      <div class="cert-card">
-        <div class="cert-icon">🏛️</div>
-        <div>
-          <div class="cert-name">Software Engineering Specialist</div>
-          <div class="cert-issuer">Saudi Council of Engineers · Jun 2025</div>
-        </div>
-      </div>
-      <div class="cert-card">
-        <div class="cert-icon">🐍</div>
-        <div>
-          <div class="cert-name">PCEP™ – Certified Entry-Level Python Programmer</div>
-          <div class="cert-issuer">Python Institute · Jan 2026</div>
-        </div>
-      </div>
-      <div class="cert-card">
-        <div class="cert-icon">🌐</div>
-        <div>
-          <div class="cert-name">CCNA: Introduction to Networks</div>
-          <div class="cert-issuer">Cisco Networking Academy · Dec 2024</div>
-        </div>
-      </div>
-      <div class="cert-card">
-        <div class="cert-icon">🔐</div>
-        <div>
-          <div class="cert-name">Ethical Hacker</div>
-          <div class="cert-issuer">Cisco Networking Academy · Apr 2025</div>
-        </div>
-      </div>
-      <div class="cert-card">
-        <div class="cert-icon">🐧</div>
-        <div>
-          <div class="cert-name">NDG Linux Essentials</div>
-          <div class="cert-issuer">Cisco Networking Academy · Mar 2024</div>
-        </div>
-      </div>
-      <div class="cert-card">
-        <div class="cert-icon">🗄️</div>
-        <div>
-          <div class="cert-name">Database Foundations</div>
-          <div class="cert-issuer">Oracle Academy · Mar 2024</div>
-        </div>
-      </div>
-      <div class="cert-card">
-        <div class="cert-icon">☁️</div>
-        <div>
-          <div class="cert-name">Software Architecture for IoT</div>
-          <div class="cert-issuer">Coursera / EIT Digital · Nov 2023</div>
-        </div>
-      </div>
-      <div class="cert-card">
-        <div class="cert-icon">🔄</div>
-        <div>
-          <div class="cert-name">Scrum Fundamentals Certified (SFC™)</div>
-          <div class="cert-issuer">SCRUMstudy · Jul 2025</div>
-        </div>
-      </div>
+      <div class="cert-card"><div class="cert-icon">🏛️</div><div><div class="cert-name">Software Engineering Specialist</div><div class="cert-issuer">Saudi Council of Engineers · Jun 2025</div></div></div>
+      <div class="cert-card"><div class="cert-icon">🐍</div><div><div class="cert-name">PCEP™ – Entry-Level Python Programmer</div><div class="cert-issuer">Python Institute · Jan 2026</div></div></div>
+      <div class="cert-card"><div class="cert-icon">🌐</div><div><div class="cert-name">CCNA: Introduction to Networks</div><div class="cert-issuer">Cisco Networking Academy · Dec 2024</div></div></div>
+      <div class="cert-card"><div class="cert-icon">🔐</div><div><div class="cert-name">Ethical Hacker</div><div class="cert-issuer">Cisco Networking Academy · Apr 2025</div></div></div>
+      <div class="cert-card"><div class="cert-icon">🐧</div><div><div class="cert-name">NDG Linux Essentials</div><div class="cert-issuer">Cisco Networking Academy · Mar 2024</div></div></div>
+      <div class="cert-card"><div class="cert-icon">🗄️</div><div><div class="cert-name">Database Foundations</div><div class="cert-issuer">Oracle Academy · Mar 2024</div></div></div>
+      <div class="cert-card"><div class="cert-icon">☁️</div><div><div class="cert-name">Software Architecture for IoT</div><div class="cert-issuer">Coursera / EIT Digital · Nov 2023</div></div></div>
+      <div class="cert-card"><div class="cert-icon">🔄</div><div><div class="cert-name">Scrum Fundamentals Certified (SFC™)</div><div class="cert-issuer">SCRUMstudy · Jul 2025</div></div></div>
     </div>
   </section>
 
   <!-- CONTACT -->
   <section class="section" id="contact">
-    <div class="section-tag">Let's connect</div>
-    <div class="section-title">Get in Touch</div>
-    <div class="divider"></div>
+    <div class="section-title">Contact Me</div>
+    <div class="section-line"></div>
+    <p class="contact-text">Feel free to reach out if you'd like to connect or collaborate on projects.</p>
     <div class="contact-grid">
       <a href="mailto:alshraryhmas@gmail.com" class="contact-card">
         <div class="contact-icon">✉️</div>
-        <div>
-          <div class="contact-label">Email</div>
-          <div class="contact-value">alshraryhmas@gmail.com</div>
-        </div>
+        <div><div class="contact-label">Email</div><div class="contact-value">alshraryhmas@gmail.com</div></div>
       </a>
       <a href="https://linkedin.com/in/hamas-alsharari-602a84320" target="_blank" class="contact-card">
         <div class="contact-icon">💼</div>
-        <div>
-          <div class="contact-label">LinkedIn</div>
-          <div class="contact-value">Hamas Alsharari</div>
-        </div>
+        <div><div class="contact-label">LinkedIn</div><div class="contact-value">Hamas Alsharari</div></div>
       </a>
       <a href="https://github.com/HamasAlsharari" target="_blank" class="contact-card">
         <div class="contact-icon">🐙</div>
-        <div>
-          <div class="contact-label">GitHub</div>
-          <div class="contact-value">HamasAlsharari</div>
-        </div>
+        <div><div class="contact-label">GitHub</div><div class="contact-value">HamasAlsharari</div></div>
       </a>
       <a href="tel:+966502572025" class="contact-card">
         <div class="contact-icon">📱</div>
-        <div>
-          <div class="contact-label">Phone</div>
-          <div class="contact-value">+966 50 257 2025</div>
-        </div>
+        <div><div class="contact-label">Phone</div><div class="contact-value">+966 50 257 2025</div></div>
       </a>
     </div>
   </section>
 
   <footer>
-    <p>© 2025 Hamas Alsharari — Software Engineer</p>
-    <p style="font-size:.75rem; color:var(--muted);">Khobar, Saudi Arabia</p>
+    <p>© 2025 Hamas Alsharari — Software Engineer · Khobar, Saudi Arabia</p>
   </footer>
 
 </body>
